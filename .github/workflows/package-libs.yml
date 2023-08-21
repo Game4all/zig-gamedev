@@ -1,0 +1,20 @@
+name: Package libs
+
+on:
+  push:
+    tags: 'v*.*.*'
+
+jobs:
+  pack-libs:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run packaging script
+        run: bash ./.github/scripts/package.sh
+        shell: bash
+      - uses: softprops/action-gh-release@v1
+        with:
+          files: ./libs/*.tar.gz
+            
